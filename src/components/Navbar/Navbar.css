@@ -1,0 +1,10 @@
+/* Remove sticky positioning */
+.navbar {
+  position: relative; /* or static */
+  /* other styles */
+}
+
+/* Add margin to the main content */
+.main-content {
+  margin-top: 20px; /* Adjust the value as needed */
+}

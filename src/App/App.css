@@ -1,0 +1,10 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures the app spans the full viewport height */
+}
+
+.content {
+  flex: 1; /* Ensures this section takes up remaining space */
+  padding-top: 64px; /* Adjust based on your navbar's height */
+}

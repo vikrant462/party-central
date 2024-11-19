@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply antialiased;
+  font-family: 'Poppins', sans-serif;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600;
+}
+
+.party-card {
+  @apply relative overflow-hidden rounded-xl transition-all duration-300 hover:scale-105;
+  background: linear-gradient(45deg, #FF416C 0%, #FF4B2B 100%);
+}
+
+.menu-item {
+  @apply transform transition-all duration-300 hover:scale-105 hover:shadow-xl;
+}
