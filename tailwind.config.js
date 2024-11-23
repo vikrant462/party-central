@@ -5,8 +5,8 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#F14069FF',
-          dark: '#E83718FF',
+          DEFAULT: '#FF416C',
+          dark: '#FF4B2B',
         },
         secondary: {
           DEFAULT: '#6C63FF',
@@ -20,8 +20,6 @@ export default {
       },
       fontFamily: {
         sans: ['Poppins', 'sans-serif'],
-        poppins: ['Poppins', 'sans-serif'],
-        inter: ['Inter', 'sans-serif'],
       },
       animation: {
         'bounce-slow': 'bounce 3s linear infinite',

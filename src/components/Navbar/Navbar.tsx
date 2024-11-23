@@ -1,7 +1,8 @@
-import { Menu, ShoppingCart, User, Music2 } from 'lucide-react';
+import { Menu, ShoppingCart, Music2 } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useCartStore } from '../../store/cartStore';
+import ProfileDropdown from './ProfileDropdown';
 import './Navbar.css';
 
 export default function Navbar() {
@@ -11,7 +12,6 @@ export default function Navbar() {
   const items = useCartStore((state) => state.items);
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
-  // Function to determine if a link is active
   const isActive = (path: string) => location.pathname === path;
 
   return (
@@ -30,8 +30,8 @@ export default function Navbar() {
               to="/" 
               className={`font-medium ${
                 isActive('/') 
-                  ? 'text-[#b62eb2] border-b-2 border-[#b62eb2]' 
-                  : 'text-gray-700 hover:text-[#b62eb2]'
+                  ? 'text-primary border-b-2 border-primary' 
+                  : 'text-gray-700 hover:text-primary'
               }`}
             >
               Home
@@ -40,8 +40,8 @@ export default function Navbar() {
               to="/events" 
               className={`font-medium ${
                 isActive('/events') 
-                  ? 'text-[#b62eb2] border-b-2 border-[#b62eb2]' 
-                  : 'text-gray-700 hover:text-[#b62eb2]'
+                  ? 'text-primary border-b-2 border-primary' 
+                  : 'text-gray-700 hover:text-primary'
               }`}
             >
               Events
@@ -50,8 +50,8 @@ export default function Navbar() {
               to="/rewards" 
               className={`font-medium ${
                 isActive('/rewards') 
-                  ? 'text-[#b62eb2] border-b-2 border-[#b62eb2]' 
-                  : 'text-gray-700 hover:text-[#b62eb2]'
+                  ? 'text-primary border-b-2 border-primary' 
+                  : 'text-gray-700 hover:text-primary'
               }`}
             >
               Rewards
@@ -60,8 +60,8 @@ export default function Navbar() {
               to="/plan-your-party" 
               className={`font-medium ${
                 isActive('/plan-your-party') 
-                  ? 'text-[#b62eb2] border-b-2 border-[#b62eb2]' 
-                  : 'text-gray-700 hover:text-[#b62eb2]'
+                  ? 'text-primary border-b-2 border-primary' 
+                  : 'text-gray-700 hover:text-primary'
               }`}
             >
               Plan Your Party
@@ -69,16 +69,14 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center space-x-4">
-            <button className="p-2 hover:bg-gray-100 rounded-full">
-              <User className="h-6 w-6 text-gray-700" />
-            </button>
+            <ProfileDropdown />
             <button 
               className="p-2 hover:bg-gray-100 rounded-full relative"
               onClick={() => navigate('/cart')}
             >
               <ShoppingCart className="h-6 w-6 text-gray-700" />
               {itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#b62eb2] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                   {itemCount}
                 </span>
               )}
@@ -100,7 +98,7 @@ export default function Navbar() {
               to="/" 
               className={`block px-3 py-2 rounded-lg ${
                 isActive('/') 
-                  ? 'bg-[#b62eb2] text-white' 
+                  ? 'bg-primary text-white' 
                   : 'text-gray-700 hover:bg-gray-100'
               }`}
             >
@@ -110,7 +108,7 @@ export default function Navbar() {
               to="/events" 
               className={`block px-3 py-2 rounded-lg ${
                 isActive('/events') 
-                  ? 'bg-[#b62eb2] text-white' 
+                  ? 'bg-primary text-white' 
                   : 'text-gray-700 hover:bg-gray-100'
               }`}
             >
@@ -120,7 +118,7 @@ export default function Navbar() {
               to="/rewards" 
               className={`block px-3 py-2 rounded-lg ${
                 isActive('/rewards') 
-                  ? 'bg-[#b62eb2] text-white' 
+                  ? 'bg-primary text-white' 
                   : 'text-gray-700 hover:bg-gray-100'
               }`}
             >
@@ -130,7 +128,7 @@ export default function Navbar() {
               to="/plan-your-party" 
               className={`block px-3 py-2 rounded-lg ${
                 isActive('/plan-your-party') 
-                  ? 'bg-[#b62eb2] text-white' 
+                  ? 'bg-primary text-white' 
                   : 'text-gray-700 hover:bg-gray-100'
               }`}
             >
