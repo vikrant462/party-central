@@ -122,9 +122,9 @@ export default function ProfileDropdown() {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50">
+        <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50 max-h-[calc(100vh-80px)] overflow-y-auto">
           {/* Profile Header */}
-          <div className="px-4 py-3 border-b border-gray-100">
+          <div className="sticky top-0 px-4 py-3 border-b border-gray-100 bg-white">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-gradient-to-r from-primary to-primary-dark flex items-center justify-center">
                 <span className="text-white text-lg font-bold">JD</span>
