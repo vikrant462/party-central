@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../../store/authStore';
 import {
   User, Settings, Gift, Calendar, CreditCard, 
   Bell, HelpCircle, Users, LogOut, ChevronRight,
-  Crown, Wallet, History, Heart, Star
+  Crown, Wallet, History, Heart, Star, MessageSquare
 } from 'lucide-react';
 
 interface MenuItem {
@@ -15,6 +16,8 @@ interface MenuItem {
 }
 
 export default function ProfileDropdown() {
+  const navigate = useNavigate();
+  const { user, logout } = useAuthStore();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -29,13 +32,19 @@ export default function ProfileDropdown() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+    setIsOpen(false);
+  };
+
   const menuItems: MenuItem[][] = [
     [
       { 
         icon: User, 
         label: 'My Profile',
         path: '/profile',
-        badge: 'VIP'
+        badge: user?.role === 'admin' ? 'Admin' : 'VIP'
       },
       { 
         icon: Crown, 
@@ -63,15 +72,14 @@ export default function ProfileDropdown() {
     ],
     [
       { 
-        icon: Wallet, 
-        label: 'Party Wallet',
-        path: '/wallet',
-        badge: '$45.50'
+        icon: MessageSquare,
+        label: 'Feedback',
+        path: '/feedback'
       },
       { 
-        icon: CreditCard, 
-        label: 'Payment Methods',
-        path: '/payment-methods'
+        icon: Star, 
+        label: 'Rate Us',
+        path: '/feedback'
       }
     ],
     [
@@ -100,88 +108,110 @@ export default function ProfileDropdown() {
         badge: 'Earn $10'
       },
       { 
-        icon: Star, 
-        label: 'Rate Us',
-        path: '/rate'
-      },
-      { 
         icon: LogOut, 
         label: 'Sign Out',
-        onClick: () => console.log('Sign out clicked')
+        onClick: handleLogout
       }
     ]
   ];
+
+  if (!user) {
+    return (
+      <div className="flex items-center gap-4">
+        <Link
+          to="/login"
+          className="text-gray-700 hover:text-primary font-medium"
+        >
+          Sign In
+        </Link>
+        <Link
+          to="/signup"
+          className="bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90"
+        >
+          Sign Up
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200"
+        className="p-2 hover:bg-gray-100 rounded-full transition-colors duration-200 flex items-center justify-center"
       >
-        <User className="h-6 w-6 text-gray-700" />
+        <div className="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-primary-dark flex items-center justify-center">
+          <span className="text-white text-sm font-bold">
+            {user.name.charAt(0).toUpperCase()}
+          </span>
+        </div>
       </button>
 
       {isOpen && (
         <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50 max-h-[calc(100vh-80px)] overflow-y-auto">
           {/* Profile Header */}
-          <div className="sticky top-0 px-4 py-3 border-b border-gray-100 bg-white">
+          <div className="sticky top-0 px-4 py-3 border-b border-gray-100 bg-white backdrop-blur-md z-10">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-gradient-to-r from-primary to-primary-dark flex items-center justify-center">
-                <span className="text-white text-lg font-bold">JD</span>
+                <span className="text-white text-lg font-bold">
+                  {user.name.charAt(0).toUpperCase()}
+                </span>
               </div>
               <div>
-                <h4 className="font-semibold text-gray-900">John Doe</h4>
-                <p className="text-sm text-gray-500">john.doe@example.com</p>
+                <h4 className="font-semibold text-gray-900">{user.name}</h4>
+                <p className="text-sm text-gray-500">{user.email}</p>
               </div>
             </div>
           </div>
 
           {/* Menu Sections */}
-          {menuItems.map((section, idx) => (
-            <div key={idx} className="py-1">
-              {section.map((item, itemIdx) => (
-                item.path ? (
-                  <Link
-                    key={itemIdx}
-                    to={item.path}
-                    className="flex items-center justify-between px-4 py-2 hover:bg-gray-50 transition-colors duration-200"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <div className="flex items-center gap-3">
-                      <item.icon className="h-5 w-5 text-gray-500" />
-                      <span className="text-gray-700">{item.label}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {item.badge && (
-                        <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary">
-                          {item.badge}
-                        </span>
-                      )}
+          <div className="overflow-y-auto">
+            {menuItems.map((section, idx) => (
+              <div key={idx} className="py-1">
+                {section.map((item, itemIdx) => (
+                  item.path ? (
+                    <Link
+                      key={itemIdx}
+                      to={item.path}
+                      className="flex items-center justify-between px-4 py-2 hover:bg-gray-50 transition-colors duration-200"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <div className="flex items-center gap-3">
+                        <item.icon className="h-5 w-5 text-gray-500" />
+                        <span className="text-gray-700">{item.label}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {item.badge && (
+                          <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary whitespace-nowrap">
+                            {item.badge}
+                          </span>
+                        )}
+                        <ChevronRight className="h-4 w-4 text-gray-400" />
+                      </div>
+                    </Link>
+                  ) : (
+                    <button
+                      key={itemIdx}
+                      onClick={() => {
+                        item.onClick?.();
+                        setIsOpen(false);
+                      }}
+                      className="w-full flex items-center justify-between px-4 py-2 hover:bg-gray-50 transition-colors duration-200"
+                    >
+                      <div className="flex items-center gap-3">
+                        <item.icon className="h-5 w-5 text-gray-500" />
+                        <span className="text-gray-700">{item.label}</span>
+                      </div>
                       <ChevronRight className="h-4 w-4 text-gray-400" />
-                    </div>
-                  </Link>
-                ) : (
-                  <button
-                    key={itemIdx}
-                    onClick={() => {
-                      item.onClick?.();
-                      setIsOpen(false);
-                    }}
-                    className="w-full flex items-center justify-between px-4 py-2 hover:bg-gray-50 transition-colors duration-200"
-                  >
-                    <div className="flex items-center gap-3">
-                      <item.icon className="h-5 w-5 text-gray-500" />
-                      <span className="text-gray-700">{item.label}</span>
-                    </div>
-                    <ChevronRight className="h-4 w-4 text-gray-400" />
-                  </button>
-                )
-              ))}
-              {idx < menuItems.length - 1 && (
-                <div className="my-1 border-b border-gray-100" />
-              )}
-            </div>
-          ))}
+                    </button>
+                  )
+                ))}
+                {idx < menuItems.length - 1 && (
+                  <div className="my-1 border-b border-gray-100" />
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

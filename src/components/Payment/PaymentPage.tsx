@@ -185,7 +185,7 @@ export default function PaymentPage() {
                 <button
                   onClick={applyPromoCode}
                   disabled={promoApplied}
-                  className="px-4 py-2 bg-primary text-white rounded-lg hover:opacity-90 disabled:opacity-50"
+                  className="px-4 py-2 bg-primary text-white rounded-lg hover:opacity-90 disabled:opacity-50 whitespace-nowrap min-w-[80px] flex items-center justify-center"
                 >
                   {promoApplied ? <Check className="h-5 w-5" /> : 'Apply'}
                 </button>

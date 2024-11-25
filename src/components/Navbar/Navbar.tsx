@@ -91,46 +91,51 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/80 backdrop-blur-md">
+        <div className="md:hidden absolute top-16 left-0 right-0 bg-white/95 backdrop-blur-md shadow-lg">
+          <div className="px-4 py-2 space-y-1">
             <Link 
               to="/" 
-              className={`block px-3 py-2 rounded-lg ${
+              className={`block px-4 py-2 rounded-lg text-base font-medium ${
                 isActive('/') 
                   ? 'bg-primary text-white' 
                   : 'text-gray-700 hover:bg-gray-100'
               }`}
+              onClick={() => setIsMenuOpen(false)}
             >
               Home
             </Link>
             <Link 
               to="/events" 
-              className={`block px-3 py-2 rounded-lg ${
+              className={`block px-4 py-2 rounded-lg text-base font-medium ${
                 isActive('/events') 
                   ? 'bg-primary text-white' 
                   : 'text-gray-700 hover:bg-gray-100'
               }`}
+              onClick={() => setIsMenuOpen(false)}
             >
               Events
             </Link>
             <Link 
               to="/rewards" 
-              className={`block px-3 py-2 rounded-lg ${
+              className={`block px-4 py-2 rounded-lg text-base font-medium ${
                 isActive('/rewards') 
                   ? 'bg-primary text-white' 
                   : 'text-gray-700 hover:bg-gray-100'
               }`}
+              onClick={() => setIsMenuOpen(false)}
             >
               Rewards
             </Link>
             <Link 
               to="/plan-your-party" 
-              className={`block px-3 py-2 rounded-lg ${
+              className={`block px-4 py-2 rounded-lg text-base font-medium ${
                 isActive('/plan-your-party') 
                   ? 'bg-primary text-white' 
                   : 'text-gray-700 hover:bg-gray-100'
               }`}
+              onClick={() => setIsMenuOpen(false)}
             >
               Plan Your Party
             </Link>

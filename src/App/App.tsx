@@ -9,14 +9,18 @@ import Events from '../components/Events/Events';
 import Rewards from '../components/Rewards/Rewards';
 import PlanYourParty from '../components/PlanYourParty/PlanYourParty';
 import Footer from '../components/HomePage/Footer';
+import LoginPage from '../components/Auth/LoginPage';
+import SignupPage from '../components/Auth/SignupPage';
+import AdminDashboard from '../components/Admin/AdminDashboard';
+import FeedbackPage from '../components/Feedback/FeedbackPage';
+import ProtectedRoute from '../components/Routes/ProtectedRoute';
 import './App.css';
 
-// Scroll to top on route change
 function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top-left corner
+    window.scrollTo(0, 0);
   }, [pathname]);
 
   return null;
@@ -31,12 +35,51 @@ export function App() {
         <div className="content">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/order-success" element={<OrderSuccess />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/feedback" element={<FeedbackPage />} />
+            <Route 
+              path="/cart" 
+              element={
+                <ProtectedRoute>
+                  <Cart />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/checkout" 
+              element={
+                <ProtectedRoute>
+                  <Checkout />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/order-success" 
+              element={
+                <ProtectedRoute>
+                  <OrderSuccess />
+                </ProtectedRoute>
+              } 
+            />
             <Route path="/events" element={<Events />} />
             <Route path="/rewards" element={<Rewards />} />
-            <Route path="/plan-your-party" element={<PlanYourParty />} />
+            <Route 
+              path="/plan-your-party" 
+              element={
+                <ProtectedRoute>
+                  <PlanYourParty />
+                </ProtectedRoute>
+              } 
+            />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </div>
         <Footer />
