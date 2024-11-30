@@ -32,6 +32,18 @@ export default function Cart() {
               <div className="flex-1">
                 <h3 className="font-semibold">{item.name}</h3>
                 <p className="text-red-600 font-bold">${item.price.toFixed(2)}</p>
+                {item.isSpecial && item.items && (
+                  <div className="mt-2 text-sm text-gray-600">
+                    <p className="font-medium">Includes:</p>
+                    <ul className="list-disc list-inside">
+                      {item.items.map((subItem, index) => (
+                        <li key={index}>
+                          {subItem.quantity}x {subItem.name}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
               <div className="flex items-center gap-2">
                 <button

@@ -37,6 +37,16 @@ export default function Navbar() {
               Home
             </Link>
             <Link 
+              to="/menu" 
+              className={`font-medium ${
+                isActive('/menu') 
+                  ? 'text-primary border-b-2 border-primary' 
+                  : 'text-gray-700 hover:text-primary'
+              }`}
+            >
+              Menu
+            </Link>
+            <Link 
               to="/events" 
               className={`font-medium ${
                 isActive('/events') 
@@ -105,6 +115,17 @@ export default function Navbar() {
               onClick={() => setIsMenuOpen(false)}
             >
               Home
+            </Link>
+            <Link 
+              to="/menu" 
+              className={`block px-4 py-2 rounded-lg text-base font-medium ${
+                isActive('/menu') 
+                  ? 'bg-primary text-white' 
+                  : 'text-gray-700 hover:bg-gray-100'
+              }`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Menu
             </Link>
             <Link 
               to="/events" 
