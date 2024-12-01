@@ -75,7 +75,7 @@ export default function FeaturedVenues() {
           </button>
         </div>
 
-        <div className="flex gap-4 overflow-x-auto pb-4 mt-8">
+        <div className="flex gap-4 overflow-x-auto p-1 mt-8">
           {venues.map((venue, index) => (
             <button
               key={index}
