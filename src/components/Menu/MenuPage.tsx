@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import CategoryBar from './CategoryBar';
-import MenuSection from './MenuSection';
+import MenuCard from './MenuCard';
 import { categories, menuItems } from './data/menuData';
 
 export default function MenuPage() {
@@ -9,6 +9,9 @@ export default function MenuPage() {
   const handleCategoryClick = (categoryId: string) => {
     setActiveCategory(categoryId);
   };
+
+  const activeItems = menuItems.filter(item => item.category === activeCategory);
+  const activeCategory_data = categories.find(cat => cat.id === activeCategory);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -23,14 +26,16 @@ export default function MenuPage() {
         onCategoryClick={handleCategoryClick}
       />
 
-      <div className="space-y-12">
-        {categories.map((category) => (
-          <MenuSection
-            key={category.id}
-            category={category}
-            items={menuItems.filter(item => item.category === category.id)}
-            isActive={activeCategory === category.id}
-          />
+      {activeCategory_data && (
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold gradient-text mb-2">{activeCategory_data.name}</h2>
+          <p className="text-gray-600">{activeCategory_data.description}</p>
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {activeItems.map((item) => (
+          <MenuCard key={item.id} item={item} />
         ))}
       </div>
     </div>

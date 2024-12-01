@@ -1,18 +1,23 @@
 import React from 'react';
 import Hero from './Hero';
-import MenuSection from './Menu/MenuSection';
-import DealsSection from './DealsSection';
-import LocationsSection from './LocationsSection';
-import { menuItems } from '../Data/MenuItems';
+import WelcomeSection from './WelcomeSection';
+import FeaturedVenues from './FeaturedVenues';
+import PopularCategories from './PopularCategories';
+import SpecialOffers from './SpecialOffers';
+import Testimonials from './Testimonials';
+import CallToAction from './CallToAction';
 
 const HomePage: React.FC = () => {
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Hero />
-      <MenuSection menuItems={menuItems} />
-      <DealsSection />
-      <LocationsSection />
-    </>
+      <WelcomeSection />
+      <FeaturedVenues />
+      <PopularCategories />
+      <SpecialOffers />
+      <Testimonials />
+      <CallToAction />
+    </div>
   );
 };
 
